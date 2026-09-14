@@ -47,11 +47,11 @@ _Run the devil's-advocate prompt (in the Sprint 2 guide). Capture the verdict._
 
 | Prompt question | What the AI surfaced | Change or defend? |
 |---|---|---|
-| Biggest assumption that could be wrong | _____ | _____ |
-| The board question I can't yet answer | _____ | _____ |
-| KRs that are outputs in disguise | _____ | _____ |
-| The "no" I should reconsider | _____ | _____ |
-| Strategy or wish list? Why? | _____ | · |
+| Biggest assumption that could be wrong | The plan assumes the adoption gap is *friction* (retyping is slow), not *incentive misalignment* — the cost of re-entry falls on the PM today, not the foreman, so a faster capture tool may not give the foreman any personal reason to switch. | **Change.** Don't treat "friction is the blocker" as settled — add an explicit pilot checkpoint after the first 1–2 accounts that checks *why* adoption is or isn't moving (qualitative check with supers, not just the usage number) before rolling out to the remaining accounts. |
+| The board question I can't yet answer | What's mechanically different this time that stops supers/foremen reverting to texting once the pilot's novelty and champion support fade? | **Change.** Add a "sustain" checkpoint to the management system — re-measure adoption at 90 days *after* active rollout support ends per account, not just during the champion-supported pilot window. |
+| KRs that are outputs in disguise | KR3 (time to system-of-record entry) is closer to a process/pipeline metric than a customer outcome, and it's gameable — a fast, empty placeholder entry would count. | **Change.** Tighten KR3's definition to only count *complete* entries (required fields + tag + photo/note), not any touch, so it can't be gamed independently of KR1/KR2. |
+| The "no" I should reconsider | Sitting out mid-market for two quarters cedes ground to competitors actively converting former default-win accounts right now — and the brief never actually establishes that enterprise accounts are at churn risk, only that field adoption is low. | **Defend.** Keep the hard no. Splitting a 10-person team across two unproven motions means neither gets done well, and mid-market churn is a symptom of the same field-adoption gap — the capability built for enterprise is the same lever we'd eventually point at mid-market, so build it once, correctly, first. |
+| Strategy or wish list? Why? | It's a strategy — real customers, a specific mechanism, a resourcing constraint, a defended trade-off — but it rests on an unvalidated assumption (friction vs. incentive) that nothing in the current plan tests before committing two quarters of the team to it. | The pilot checkpoint added above is what turns that gap from a blind spot into a managed risk. |
 
 ## 5. Self-diagnostic (6 questions)
 
