@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nudge — Weekly Money Summary Prototype</title>
+<style>
+  :root, .viz-root {
+    color-scheme: light;
+    --page-plane:     #f9f9f7;
+    --surface-1:      #fcfcfb;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --gridline:       #e1e0d9;
+    --baseline:       #c3c2b7;
+    --border:         rgba(11,11,11,0.10);
+    --series-1:       #2a78d6;   /* blue — "this week" */
+    --series-1-light: #9ec5f4;   /* blue step 200 — "usual" */
+    --status-good:    #0ca30c;
+    --status-warning: #fab219;
+    --success-text:   #006300;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])), :root:where(:not([data-theme="light"])) .viz-root {
+      color-scheme: dark;
+      --page-plane:     #0d0d0d;
+      --surface-1:      #1a1a19;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --gridline:       #2c2c2a;
+      --baseline:       #383835;
+      --border:         rgba(255,255,255,0.10);
+      --series-1:       #3987e5;
+      --series-1-light: #184f95;
+      --status-good:    #0ca30c;
+      --status-warning: #fab219;
+      --success-text:   #0ca30c;
+    }
+  }
+  :root[data-theme="dark"], :root[data-theme="dark"] .viz-root {
+    color-scheme: dark;
+    --page-plane:     #0d0d0d;
+    --surface-1:      #1a1a19;
+    --text-primary:   #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted:     #898781;
+    --gridline:       #2c2c2a;
+    --baseline:       #383835;
+    --border:         rgba(255,255,255,0.10);
+    --series-1:       #3987e5;
+    --series-1-light: #184f95;
+    --status-good:    #0ca30c;
+    --status-warning: #fab219;
+    --success-text:   #0ca30c;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--page-plane);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--text-primary);
+    min-height: 100%;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 32px 16px 64px;
+  }
+
+  .rig-caption {
+    max-width: 420px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .rig-caption strong { color: var(--text-primary); }
+  .rig-reset {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    border-radius: 999px;
+    font-size: 12px;
+    padding: 4px 12px;
+    cursor: pointer;
+    margin-top: 4px;
+  }
+  .rig-reset:hover { background: var(--gridline); }
+
+  /* Phone frame */
+  .phone {
+    width: 375px;
+    max-width: 92vw;
+    height: 812px;
+    max-height: 85vh;
+    background: var(--surface-1);
+    border-radius: 40px;
+    border: 8px solid var(--text-primary);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .statusbar {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 22px 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .notch {
+    position: absolute;
+    top: 8px; left: 50%; transform: translateX(-50%);
+    width: 120px; height: 20px;
+    background: var(--text-primary);
+    border-radius: 12px;
+    z-index: 5;
+  }
+
+  .screen {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 20px 90px;
+    animation: fade-in 220ms ease;
+  }
+  .screen[hidden] { display: none; }
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .tabbar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 74px;
+    background: var(--surface-1);
+    border-top: 1px solid var(--gridline);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+    padding-top: 10px;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .tabbar .tab { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .tabbar .tab.active { color: var(--series-1); font-weight: 600; }
+  .tabbar .dot { width: 20px; height: 20px; border-radius: 6px; background: currentColor; opacity: 0.15; }
+
+  h1.app-title { font-size: 22px; font-weight: 700; margin: 10px 0 2px; }
+  .avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--series-1-light);
+    color: var(--series-1);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
+  }
+  .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+
+  /* Cards */
+  .card {
+    background: var(--surface-1);
+    border: 1px solid var(--gridline);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .card-muted {
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  .highlight-card {
+    background: linear-gradient(135deg, var(--series-1) 0%, #1c5cab 100%);
+    color: #fff;
+    border-radius: 18px;
+    padding: 18px;
+    margin: 6px 0 16px;
+    cursor: pointer;
+    border: none;
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
+    transition: transform 120ms ease;
+  }
+  .highlight-card:active { transform: scale(0.98); }
+  .highlight-card .eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+    opacity: 0.85; margin-bottom: 6px;
+  }
+  .highlight-card .title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+  .highlight-card .sub { font-size: 13px; opacity: 0.9; }
+  .highlight-card .chevron { float: right; font-size: 20px; opacity: 0.85; }
+
+  .section-label {
+    font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;
+    color: var(--text-muted); margin: 18px 0 8px;
+  }
+
+  /* Stat tile */
+  .stat-tile .stat-value { font-size: 32px; font-weight: 700; line-height: 1.1; }
+  .stat-tile .stat-label { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; font-weight: 600;
+    padding: 3px 9px; border-radius: 999px;
+    margin-top: 10px;
+  }
+  .pill-warning { background: rgba(250,178,25,0.16); color: #96650a; }
+  .pill-good { background: rgba(12,163,12,0.14); color: var(--success-text); }
+  @media (prefers-color-scheme: dark) {
+    .pill-warning { color: var(--status-warning); }
+  }
+
+  .compare { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+  .compare-row { display: flex; align-items: center; gap: 10px; }
+  .compare-label { width: 66px; font-size: 12px; color: var(--text-secondary); flex: 0 0 auto; }
+  .compare-track { flex: 1 1 auto; height: 10px; background: var(--gridline); border-radius: 6px; overflow: hidden; }
+  .compare-fill { height: 100%; border-radius: 6px; }
+  .compare-amount { width: 48px; text-align: right; font-size: 12px; font-weight: 600; flex: 0 0 auto; }
+
+  /* Nudge card */
+  .nudge-card h3 { margin: 0 0 6px; font-size: 15px; }
+  .nudge-card p { margin: 0 0 14px; font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+  .btn-primary {
+    background: var(--series-1); color: #fff; border: none;
+    font-size: 14px; font-weight: 600;
+    padding: 10px 16px; border-radius: 10px; cursor: pointer;
+    font-family: inherit;
+  }
+  .btn-primary:hover { filter: brightness(1.05); }
+  .btn-link {
+    background: none; border: none; color: var(--text-muted);
+    font-size: 13px; margin-left: 10px; cursor: pointer; font-family: inherit;
+  }
+  .confirm-row { display: flex; align-items: center; gap: 8px; color: var(--success-text); font-weight: 600; font-size: 14px; }
+  .confirm-icon {
+    width: 22px; height: 22px; border-radius: 50%; background: var(--status-good);
+    color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; flex: 0 0 auto;
+  }
+
+  /* Goal meter */
+  .goal-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+  .goal-header .name { font-size: 14px; font-weight: 700; }
+  .goal-header .amounts { font-size: 13px; color: var(--text-secondary); }
+  .meter-track { height: 12px; background: var(--gridline); border-radius: 8px; overflow: hidden; }
+  .meter-fill { height: 100%; background: var(--series-1); border-radius: 8px; transition: width 500ms ease; }
+  .goal-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 12px; }
+
+  .txn-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--gridline); font-size: 13px; }
+  .txn-row:last-child { border-bottom: none; }
+  .txn-name { color: var(--text-primary); }
+  .txn-meta { color: var(--text-muted); font-size: 11px; }
+  .txn-amt { font-weight: 600; }
+
+  .back-row { display: flex; align-items: center; gap: 10px; margin: 8px 0 4px; }
+  .back-btn { background: none; border: none; font-size: 20px; color: var(--text-primary); cursor: pointer; padding: 4px; }
+  .screen-title { font-size: 17px; font-weight: 700; }
+  .greeting { color: var(--text-secondary); font-size: 13px; margin: 2px 0 16px; }
+</style>
+</head>
+<body class="viz-root">
+
+  <div class="rig-caption">
+    <strong>Prototype — Personalized Weekly Money Summary.</strong>
+    You're testing as Alex, 28, who connected a Chase account 2 weeks ago and hasn't opened Nudge since. Click through the flow below.
+    <br><button class="rig-reset" onclick="resetProto()">Restart flow</button>
+  </div>
+
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="statusbar"><span>9:41</span><span>●●●● 🔋</span></div>
+
+    <!-- SCREEN 1: HOME FEED -->
+    <div class="screen" id="screen-home">
+      <div class="topbar">
+        <h1 class="app-title">Nudge</h1>
+        <div class="avatar">A</div>
+      </div>
+
+      <button class="highlight-card" onclick="showScreen('summary')">
+        <span class="chevron">›</span>
+        <div class="eyebrow">New · Ready for you</div>
+        <div class="title">Your weekly money summary is ready</div>
+        <div class="sub">See where your money went this week 👋</div>
+      </button>
+
+      <div class="section-label">Overview</div>
+      <div class="card card-muted">
+        Spending breakdown — connected Jul 6. No changes since setup.
+      </div>
+      <div class="card card-muted">
+        Savings goal: Emergency Fund — 21% funded.
+      </div>
+    </div>
+
+    <!-- SCREEN 2: WEEKLY SUMMARY -->
+    <div class="screen" id="screen-summary" hidden>
+      <div class="back-row">
+        <button class="back-btn" onclick="showScreen('home')" aria-label="Back">←</button>
+        <div class="screen-title">Week of Jul 20–26</div>
+      </div>
+      <div class="greeting">Hey Alex, here's where your money went this week.</div>
+
+      <div class="section-label">Top Insight</div>
+      <div class="card stat-tile">
+        <div class="stat-value">$42</div>
+        <div class="stat-label">spent on Coffee &amp; Cafes this week</div>
+        <span class="pill pill-warning">⚠️ 3× your usual</span>
+
+        <div class="compare">
+          <div class="compare-row">
+            <div class="compare-label">This week</div>
+            <div class="compare-track"><div class="compare-fill" style="width:100%; background:var(--series-1);"></div></div>
+            <div class="compare-amount">$42</div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-label">Your usual</div>
+            <div class="compare-track"><div class="compare-fill" style="width:33%; background:var(--series-1-light);"></div></div>
+            <div class="compare-amount">$14</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label">Nudge</div>
+      <div class="card nudge-card" id="nudge-card">
+        <div id="nudge-ask">
+          <h3>Want to stay on track?</h3>
+          <p>Set a $20/week coffee budget and you'll likely reach your Emergency Fund goal about 2 months sooner.</p>
+          <button class="btn-primary" onclick="acceptNudge()">Set $20 budget</button>
+          <button class="btn-link" onclick="dismissNudge()">Not now</button>
+        </div>
+        <div id="nudge-done" hidden>
+          <div class="confirm-row"><span class="confirm-icon">✓</span> Budget set for $20/week</div>
+          <p style="margin-top:8px;">We'll nudge you if you get close. Nice work, Alex.</p>
+        </div>
+      </div>
+
+      <div class="section-label">Savings Goal</div>
+      <div class="card">
+        <div class="goal-header">
+          <div class="name">Emergency Fund</div>
+          <div class="amounts">$640 / $3,000</div>
+        </div>
+        <div class="meter-track"><div class="meter-fill" style="width:21%;"></div></div>
+        <div class="goal-foot">
+          <span style="color:var(--text-secondary);">+$15 this week from round-ups</span>
+          <span class="pill pill-good">🟢 On track</span>
+        </div>
+      </div>
+
+      <div class="section-label">This week's transactions</div>
+      <div class="card">
+        <div class="txn-row"><div><div class="txn-name">Blue Bottle Coffee</div><div class="txn-meta">Jul 21</div></div><div class="txn-amt">$6.75</div></div>
+        <div class="txn-row"><div><div class="txn-name">Trader Joe's</div><div class="txn-meta">Jul 22</div></div><div class="txn-amt">$54.10</div></div>
+        <div class="txn-row"><div><div class="txn-name">Peet's Coffee</div><div class="txn-meta">Jul 22</div></div><div class="txn-amt">$7.20</div></div>
+        <div class="txn-row"><div><div class="txn-name">Chase Round-Up Transfer</div><div class="txn-meta">Jul 23</div></div><div class="txn-amt">+$15.00</div></div>
+        <div class="txn-row"><div><div class="txn-name">Local Coffee Co</div><div class="txn-meta">Jul 24</div></div><div class="txn-amt">$6.50</div></div>
+        <div class="txn-row"><div><div class="txn-name">Blue Bottle Coffee</div><div class="txn-meta">Jul 25</div></div><div class="txn-amt">$9.15</div></div>
+        <div class="txn-row"><div><div class="txn-name">Shell Gas Station</div><div class="txn-meta">Jul 26</div></div><div class="txn-amt">$38.40</div></div>
+        <div class="txn-row"><div><div class="txn-name">Blue Bottle Coffee</div><div class="txn-meta">Jul 26</div></div><div class="txn-amt">$12.60</div></div>
+      </div>
+    </div>
+
+    <div class="tabbar">
+      <div class="tab active"><div class="dot"></div>Home</div>
+      <div class="tab"><div class="dot"></div>Goals</div>
+      <div class="tab"><div class="dot"></div>Nudges</div>
+      <div class="tab"><div class="dot"></div>Profile</div>
+    </div>
+  </div>
+
+<script>
+  function showScreen(name) {
+    document.getElementById('screen-home').hidden = name !== 'home';
+    document.getElementById('screen-summary').hidden = name !== 'summary';
+  }
+  function acceptNudge() {
+    document.getElementById('nudge-ask').hidden = true;
+    document.getElementById('nudge-done').hidden = false;
+  }
+  function dismissNudge() {
+    document.getElementById('nudge-card').style.opacity = '0.55';
+  }
+  function resetProto() {
+    document.getElementById('nudge-ask').hidden = false;
+    document.getElementById('nudge-done').hidden = true;
+    document.getElementById('nudge-card').style.opacity = '1';
+    showScreen('home');
+  }
+</script>
+</body>
+</html>
