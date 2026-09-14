@@ -55,13 +55,9 @@ _Run the devil's-advocate prompt (in the Sprint 2 guide). Capture the verdict._
 
 ## 5. Self-diagnostic (6 questions)
 
-- [ ] **Clear**: a new PM could read it and know exactly what we will and won't do
-- [ ] **Names the real challenge**: the diagnosis is specific enough to be uncomfortable
-- [ ] **Makes a hard bet**: it says no to something valuable
-- [ ] **Cascadable**: teams can translate it into their own OKRs
-- [ ] **Coherent**: every choice reinforces the others
-- [ ] **Committed**: resources are actually moving toward it
-
-## Link to full artifact
-
-_[link to your Strategy Sprint Builder export in your repo]_
+- [x] **Clear**: a new PM could read it and know exactly what we will and won't do
+- [x] **Names the real challenge**: the diagnosis is specific enough to be uncomfortable
+- [x] **Makes a hard bet**: it says no to something valuable
+- [x] **Cascadable**: teams can translate it into their own OKRs
+- [x] **Coherent**: every choice reinforces the others
+- [ ] **Committed**: resources are actually moving toward it — not yet true. The Vision check flags this directly: "why us, now" only holds if leadership stops letting the enterprise-analytics camp pull roadmap capacity away from Foundations. That's a real, unresolved fight, not a formality.
