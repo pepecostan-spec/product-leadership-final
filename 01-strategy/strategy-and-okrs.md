@@ -35,11 +35,11 @@ _One valuable thing you are explicitly choosing **not** to do, and why it protec
 
 _One Objective and three Key Results that flow directly from the cascade. Each KR must be a measurable **outcome**, not an output/milestone._
 
-> **Objective:** _____
+> **Objective:** Make Meridian the first tool superintendents and foremen reach for on the jobsite — not the group text — across our enterprise accounts.
 >
-> - **KR1:** [metric] from [baseline] to [target] by [date]
-> - **KR2:** [metric] from [baseline] to [target] by [date]
-> - **KR3:** [metric] from [baseline] to [target] by [date]
+> - **KR1:** Weekly active field users (superintendents/foremen) as % of assigned field roles, across pilot enterprise accounts: 10% → 60% by end of Q1 2027
+> - **KR2:** % of daily field updates (photos, status, RFIs) captured natively in Meridian vs. texted/emailed and re-entered later by a PM: 15% → 70% by end of Q1 2027
+> - **KR3:** Median time from field event to system-of-record entry: ~18 hours (next-day PM transcription) → under 15 minutes by end of Q1 2027
 
 ## 4. AI pressure-test notes
 
