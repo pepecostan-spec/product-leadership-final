@@ -10,7 +10,7 @@ This is a **template repo**. Click **Use this template → Create a new reposito
 
 | # | Deliverable | Module | Status | File |
 |---|---|---|---|---|
-| 1 | **Product Strategy One-Pager & OKRs** | M1 | ☐ | `01-strategy/strategy-and-okrs.md` |
+| 1 | **Product Strategy One-Pager & OKRs** | M1 | ✅ | `01-strategy/strategy-and-okrs.md` |
 | 2 | **Outcome Roadmap & Trade-off Memo** | M2 | ☐ | `02-roadmap/outcome-roadmap.md` |
 | 3 | **Team Charter** (What We Own + How We Decide) | M3 | ☐ | `03-team-charter/team-charter.md` |
 | 4 | **Financial Model** (business case + kill criteria) | M5 | ☐ | `04-financial-model/financial-model.md` |
@@ -21,7 +21,7 @@ This is a **template repo**. Click **Use this template → Create a new reposito
 
 ## The strategy in one sentence
 
-_What is your scenario, where will you play, and what is the single hard bet you're making?_
+**Meridian Foundations** — inside our existing top-100 enterprise accounts, make field crews (not new mid-market logos) the target, winning by closing the capture-to-system-of-record loop a group text can't; the hard bet is sitting out mid-market land-and-expand until field adoption is proven, even as competitors chip away at accounts we used to win by default.
 
 ___
 
