@@ -1,4 +1,4 @@
-# Team Charter: [Fable / Meridian / your initiative]
+# Team Charter: Meridian Foundations
 
 > Module 3 · Lead and Develop High-Performing Teams, ★ Deliverable 3
 >
@@ -10,10 +10,14 @@ _The team's mandate: the outcomes and surfaces this team is accountable for end-
 
 | Area | We own it | We influence it (don't own) |
 |---|---|---|
-| _____ | _____ | _____ |
-| _____ | _____ | _____ |
+| Field capture experience | The offline-first mobile app (camera, voice, one-tap status) and its field UI | The enterprise desktop UI |
+| Capture-to-record pipeline | Auto-tagging (geolocation, timestamp, OCR) and sync into the system of record | The core data model and RFI/cost-code schemas (core platform team) |
+| Field adoption and rollout | Pilot playbook, champions, the validation checkpoint, and KR1–KR3 | Enterprise account strategy and renewals (sales, account management) |
+| Field data for the office | Nothing beyond existing views | Manager dashboards and ERP/analytics (enterprise team) |
 
-> Our mission in one line: _____
+> Our mission in one line: Make Meridian the first tool superintendents and foremen reach for on the jobsite, without touching anything finance and compliance already rely on.
+
+**Out of scope:** mid-market land-and-expand, ERP/analytics depth, a field-data manager dashboard, and rollout beyond the pilot accounts until the validation checkpoint passes. These come straight from the Module 1 and 2 hard nos.
 
 ## 2. How We Decide
 
@@ -21,10 +25,14 @@ _The team's decision-making operating model: the decisions you make, who makes e
 
 | Decision type | Who decides | Who's consulted | How we break a tie |
 |---|---|---|---|
-| _____ | _____ | _____ | _____ |
-| _____ | _____ | _____ | _____ |
+| Feature and scope calls on the field surface | PM | Mobile eng lead, UX research, customer success | The OKR test: does it move KR1, KR2 or KR3? If still split, the PM decides |
+| Technical approach (sync design, tagging models) | Mobile eng lead | PM | If a technical choice changes what ships or when, it becomes a scope call and the PM decides |
+| Which accounts roll out, and when | Customer success lead and PM jointly | Account owners | Pilot checkpoint evidence |
+| Anything touching the core platform or an enterprise contract | Joint call with the enterprise platform lead | Finance and compliance stakeholders | Escalate to the Head of Product. We never remove a feature finance or compliance uses |
 
-> Our default: _____ decides; we escalate to _____ when _____.
+> Our default: the PM decides scope; we escalate to the Head of Product when a call touches the core platform or a customer contract, or when a cross-team conflict isn't resolved in 48 hours. Escalations from outside the team are resolved by the Head of Product.
+
+**Where this charter leaves room for conflict:** the line between "technical approach" and "scope" is the boundary the Module 3 exercise below diagnosed, and this charter now names it. The softer spot is "influence" on the core platform: nothing says how fast the platform team must respond, so field work could stall while we wait on them.
 
 ## 3. Module 3 lab guide exercise
 
