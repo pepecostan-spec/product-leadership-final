@@ -12,8 +12,8 @@ This is a **template repo**. Click **Use this template → Create a new reposito
 |---|---|---|---|---|
 | 1 | **Product Strategy One-Pager & OKRs** | M1 | ✅ | `01-strategy/strategy-and-okrs.md` |
 | 2 | **Outcome Roadmap & Trade-off Memo** | M2 | ✅ | `02-roadmap/outcome-roadmap.md` |
-| 3 | **Team Charter** (What We Own + How We Decide) | M3 | ☐ | `03-team-charter/team-charter.md` |
-| 4 | **Financial Model** (business case + kill criteria) | M5 | ☐ | `04-financial-model/financial-model.md` |
+| 3 | **Team Charter** (What We Own + How We Decide) | M3 | ✅ | `03-team-charter/team-charter.md` |
+| 4 | **Financial Model** (business case + kill criteria) | M5 | ✅ | `04-financial-model/financial-model.md` |
 | 5 | **Individual Insights** (reflection) | M6 | ☐ | `05-insights/individual-insights.md` |
 | ★ | **Final Project Presentation** (generated in M6, committed to your repo) | M6 | ☐ | `05-insights/final-presentation.md` |
 
