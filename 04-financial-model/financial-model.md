@@ -1,4 +1,4 @@
-# Financial Model: [Fable / Meridian / your initiative]
+# Financial Model: Meridian Foundations
 
 > Module 5 · Master Product Financials & Strategic Bets, ★ Deliverable 5
 >
@@ -8,21 +8,23 @@
 
 _Why this initiative is worth funding over the alternatives. Include the key unit economics assumptions, CAC, LTV, payback period, where relevant._
 
+This is a retention-protection bet, not an acquisition funnel, so the table below replaces CAC/LTV with the assumptions that actually drive the return.
+
 | Assumption | Value | Source / rationale |
 |---|---|---|
-| CAC | _____ | _____ |
-| LTV | _____ | _____ |
-| Payback period | _____ | _____ |
-| Investment required | _____ | _____ |
-| Expected return | _____ | _____ |
+| Retention-risk reduction from adoption | 10 points (15% → 5% non-renewal/downgrade risk) | Estimated — the assumption doing the most work in this case. Not yet measured; needs validation against real account-health data once the pilot runs. |
+| Average enterprise contract value | ~$150,000/year | Order-of-magnitude estimate for a system-of-record used on $50M+ projects; pending confirmation from finance. |
+| Baseline non-renewal/downgrade risk, low-engagement accounts | ~15% | Estimated from typical multi-persona-adoption retention patterns; validate against Meridian's own account-health data. |
+| Investment required (Now horizon, 2 quarters) | ~$1.1M | 10-person cross-functional team (product, mobile engineering, UX research, customer success), fully loaded, for two quarters. |
+| Expected return, at scale (Later horizon, ~12 mo) | ~$570,000/year ARR protected | 38 enterprise accounts × $15,000 expected value protected per account (10-point risk reduction × $150,000 contract value). |
 
-> **The case in one paragraph:** _____
+> **The case in one paragraph:** Meridian Foundations is a defensive bet, not a growth bet — full-account adoption, not just office-role usage, is what typically holds an enterprise renewal together, so raising field-role WAU in existing top-100 accounts should reduce the probability a low-engagement account churns or downgrades at renewal. At scale, that's roughly $570,000/year in expected ARR protected against a ~$1.1M Now-horizon investment — about a 1.9-year payback through retention alone, with real but unpriced optionality if the mid-market hard no is later revisited. The whole case rests on one largely unvalidated number: a 10-point retention-risk reduction from adoption. If that number is actually 3–4 points instead of 10, expected value protected falls by 60–70%, which is exactly what the pilot and kill criterion below are built to catch before the Later-horizon rollout is funded.
 
 ## 2. Kill criteria
 
 _The specific signals that would tell you this bet is no longer worth pursuing. Be explicit about the metric, the threshold, and the timeline._
 
-> If **[metric]** does not reach **[threshold]** by **[date]**, we will **[decision]**.
+> If, after the pilot (Now + Next horizons, ~6 months), field-role WAU has not reached 45% **and** pilot accounts show no measurable renewal-risk improvement relative to a matched non-pilot comparison cohort, we will not fund the Later-horizon full rollout, and will reallocate the mobile-engineering capacity to the enterprise-analytics roadmap instead. The comparison cohort is required deliberately: without one, a rising WAU number could reflect general account health improving for unrelated reasons, not the feature — the same measurement gap flagged in the Part 1 evaluation above.
 
 ## 3. Module 5 lab guide exercise: evaluate a sample case
 
